@@ -3,41 +3,38 @@ import logo from "./logo.svg";
 import "./App.css";
 import { Composite, Leaf } from "./components/Composite";
 import {
-  Context,
-  ConcreteStrategyA,
-  ConcreteStrategyB,
-  ConcreteStrategyC
-} from "./components/Strategy";
+  SumPriceStrategy,
+  MultiplyPriceStrategy,
+  DividePriceStrategy
+} from "./components/CalculatePriceStrategy";
 
-const tree = new Composite("tree");
-const branch1 = new Composite("branch1");
-const branch2 = new Composite("branch2");
-const simple = new Leaf("simple", 150);
-
+const branch1 = new Composite("branch1", new SumPriceStrategy());
 branch1.add(new Leaf("leaf1", 10));
 branch1.add(new Leaf("leaf2", 10));
-branch1.add(simple);
+
+const branch2 = new Composite("branch2", new SumPriceStrategy());
 branch2.add(new Leaf("leaf1", 10));
-branch2.add(new Leaf("leaf2", 10));
-branch2.add(new Leaf("leaf2", 10));
-branch2.add(new Leaf("leaf2", 10));
-branch2.add(new Leaf("leaf2", 10));
-tree.add(branch1);
-tree.add(branch2);
+branch2.add(new Leaf("leaf2", 20));
 
-console.log(tree.getPrice());
-console.log(branch1.getPrice());
-console.log(simple.getPrice());
+const branch3 = new Composite("branch3", new SumPriceStrategy());
+branch3.add(new Leaf("leaf1", 20));
+branch3.add(new Leaf("leaf2", 20));
 
-const context = new Context(new ConcreteStrategyA());
-context.doSomeBusinessLogic();
-console.log("");
+const tree1 = new Composite("tree", new MultiplyPriceStrategy());
+tree1.add(branch1);
+tree1.add(branch2);
 
-context.setStrategy(new ConcreteStrategyB());
-context.doSomeBusinessLogic();
+const tree2 = new Composite("tree", new MultiplyPriceStrategy());
+tree2.add(branch1);
+tree2.add(branch3);
 
-context.setStrategy(new ConcreteStrategyC());
-context.doSomeBusinessLogic();
+const combinedTree = new Composite("combinedTree", new DividePriceStrategy());
+combinedTree.add(tree1);
+combinedTree.add(tree2);
+
+console.log(tree1.getPrice(), "tree1");
+console.log(tree2.getPrice(), "tree2");
+console.log(combinedTree.getPrice(), "combinedTree");
 
 const App: React.FC = () => {
   return (

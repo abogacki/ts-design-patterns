@@ -1,3 +1,5 @@
+import { CalculatePriceStrategy } from "./CalculatePriceStrategy";
+
 export abstract class Component {
   name: string;
   price!: number;
@@ -39,7 +41,7 @@ export abstract class Component {
   }
 
   /**
-   * opeartion
+   * getPrice
    */
   public abstract getPrice(): number;
 }
@@ -59,6 +61,13 @@ export class Leaf extends Component {
 
 export class Composite extends Component {
   protected children: Component[] = [];
+  private strategy: CalculatePriceStrategy;
+
+  constructor(name: string, strategy: CalculatePriceStrategy) {
+    super(name);
+    this.strategy = strategy;
+  }
+
   /**
    * add
    */
@@ -83,12 +92,21 @@ export class Composite extends Component {
   }
 
   /**
+   *
+   * setStrategy
+   */
+  setStrategy(strategy: CalculatePriceStrategy): void {
+    this.strategy = strategy;
+  }
+
+  /**
    * getPrice
    */
   public getPrice(): number {
-    const sum = this.children.reduce((s, c) => {
-      return s + c.getPrice();
-    }, 0);
-    return sum;
+    const childrenPrices = this.children.map(c => c.getPrice());
+    console.log(childrenPrices);
+    console.log(this.children);
+
+    return this.strategy.calculatePrice(childrenPrices);
   }
 }
