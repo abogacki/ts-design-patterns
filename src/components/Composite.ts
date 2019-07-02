@@ -1,6 +1,6 @@
 export abstract class Component {
   name: string;
-  price!: number | undefined;
+  price!: number;
   protected parent!: Component;
 
   constructor(name: string) {
