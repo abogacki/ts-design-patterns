@@ -1,6 +1,28 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import { Composite, Leaf } from "./components/Composite";
+
+const tree = new Composite("tree");
+const branch1 = new Composite("branch1");
+const branch2 = new Composite("branch2");
+const simple = new Leaf("simple", 150);
+
+branch1.add(new Leaf("leaf1", 10));
+branch1.add(new Leaf("leaf2", 10));
+branch1.add(simple);
+branch2.add(new Leaf("leaf1", 10));
+branch2.add(new Leaf("leaf2", 10));
+branch2.add(new Leaf("leaf2", 10));
+branch2.add(new Leaf("leaf2", 10));
+branch2.add(new Leaf("leaf2", 10));
+
+tree.add(branch1);
+tree.add(branch2);
+
+console.log(tree.getPrice());
+console.log(branch1.getPrice());
+console.log(simple.getPrice());
 
 const App: React.FC = () => {
   return (
@@ -21,6 +43,6 @@ const App: React.FC = () => {
       </header>
     </div>
   );
-}
+};
 
 export default App;
