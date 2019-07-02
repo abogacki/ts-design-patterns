@@ -2,6 +2,12 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import { Composite, Leaf } from "./components/Composite";
+import {
+  Context,
+  ConcreteStrategyA,
+  ConcreteStrategyB,
+  ConcreteStrategyC
+} from "./components/Strategy";
 
 const tree = new Composite("tree");
 const branch1 = new Composite("branch1");
@@ -16,13 +22,22 @@ branch2.add(new Leaf("leaf2", 10));
 branch2.add(new Leaf("leaf2", 10));
 branch2.add(new Leaf("leaf2", 10));
 branch2.add(new Leaf("leaf2", 10));
-
 tree.add(branch1);
 tree.add(branch2);
 
 console.log(tree.getPrice());
 console.log(branch1.getPrice());
 console.log(simple.getPrice());
+
+const context = new Context(new ConcreteStrategyA());
+context.doSomeBusinessLogic();
+console.log("");
+
+context.setStrategy(new ConcreteStrategyB());
+context.doSomeBusinessLogic();
+
+context.setStrategy(new ConcreteStrategyC());
+context.doSomeBusinessLogic();
 
 const App: React.FC = () => {
   return (
