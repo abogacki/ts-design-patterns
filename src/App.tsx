@@ -1,12 +1,13 @@
 import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import { Composite, Leaf } from "./components/Composite";
+import { Leaf } from "./composite/Leaf";
+import { Composite } from "./composite/Composite";
 import {
   SumPriceStrategy,
   MultiplyPriceStrategy,
   DividePriceStrategy
-} from "./components/CalculatePriceStrategy";
+} from "./strategy/CalculatePriceStrategies";
 
 const branch1 = new Composite("branch1", new SumPriceStrategy());
 branch1.add(new Leaf("leaf1", 10));
