@@ -8,8 +8,14 @@ import {
   MultiplyPriceStrategy,
   DividePriceStrategy
 } from "./strategy/CalculatePriceStrategies";
+import {
+  Plus10PriceDecorator,
+  Minus10PriceDecorator
+} from "./decorator/Decorator";
 
-const branch1 = new Composite("branch1", new SumPriceStrategy());
+const branch1 = new Plus10PriceDecorator(
+  new Composite("branch1", new SumPriceStrategy())
+);
 branch1.add(new Leaf("leaf1", 10));
 branch1.add(new Leaf("leaf2", 10));
 

@@ -1,6 +1,10 @@
-export abstract class Component {
+export interface PriceOwnerComponent {
+  getPrice(): number;
+}
+
+export abstract class Component implements PriceOwnerComponent {
   name: string;
-  protected parent!: Component;
+  parent!: Component;
 
   constructor(name: string) {
     this.name = name;
