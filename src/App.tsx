@@ -13,9 +13,19 @@ import {
   Minus10PriceDecorator
 } from "./decorator/Decorator";
 
+import {
+  clientCode,
+  ConcreteFactory1,
+  ConcreteFactory2
+} from "./abstractFactory/AbstractFactory";
+
 const branch1 = new Plus10PriceDecorator(
   new Composite("branch1", new SumPriceStrategy())
 );
+
+const decoratedLeaf = new Minus10PriceDecorator(new Leaf("graphics card", 10));
+console.log(decoratedLeaf.getPrice());
+
 branch1.add(new Leaf("leaf1", 10));
 branch1.add(new Leaf("leaf2", 10));
 
@@ -39,9 +49,18 @@ const combinedTree = new Composite("combinedTree", new DividePriceStrategy());
 combinedTree.add(tree1);
 combinedTree.add(tree2);
 
-console.log(tree1.getPrice(), "tree1");
-console.log(tree2.getPrice(), "tree2");
-console.log(combinedTree.getPrice(), "combinedTree");
+/**
+ * The client code can work with any concrete factory class.
+ */
+console.log("Client: Testing client code with the first factory type...");
+clientCode(new ConcreteFactory1());
+
+console.log("");
+
+console.log(
+  "Client: Testing the same client code with the second factory type..."
+);
+clientCode(new ConcreteFactory2());
 
 const App: React.FC = () => {
   return (
