@@ -19,6 +19,8 @@ import {
   ConcreteFactory2
 } from "./abstractFactory/AbstractFactory";
 
+import { Circle, Color, MultiColor, Rectangle } from "./bridge/Bridge";
+
 const branch1 = new Plus10PriceDecorator(
   new Composite("branch1", new SumPriceStrategy())
 );
@@ -49,18 +51,18 @@ const combinedTree = new Composite("combinedTree", new DividePriceStrategy());
 combinedTree.add(tree1);
 combinedTree.add(tree2);
 
-/**
- * The client code can work with any concrete factory class.
- */
-console.log("Client: Testing client code with the first factory type...");
-clientCode(new ConcreteFactory1());
+const redColor = new Color("red");
+const redBlueColor = new MultiColor("red", "blue");
 
-console.log("");
-
-console.log(
-  "Client: Testing the same client code with the second factory type..."
-);
-clientCode(new ConcreteFactory2());
+const redRectangle = new Rectangle(3, 4, redColor);
+const redBlueRectangle = new Rectangle(3, 4, redBlueColor);
+const redCircle = new Circle(3, redColor);
+const redBlueCircle = new Circle(3, redBlueColor);
+redRectangle.color.repaint();
+// console.log(redRectangle.color.paint);
+console.log(redBlueRectangle.color);
+console.log(redBlueRectangle.color.repaint());
+console.log(redBlueRectangle.color);
 
 const App: React.FC = () => {
   return (
